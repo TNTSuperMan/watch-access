@@ -10,10 +10,9 @@
 $ npm install watch-access
 ```
 ## CDN
-> bunのバンドラを使ったためIIFE用を用意出来ませんでした
-
 [ESモジュール用](https://unpkg.com/watch-access/dist/esm.js)
 [CommonJS用](https://unpkg.com/watch-access/dist/cjs.js)
+[IIFE(HTMLのCDNとか)用](https://unpkg.com/watch-access/dist/iife.js)
 ## how to use
 #### オブジェクト
 ```js
@@ -43,6 +42,10 @@ add(42,42);
 //CAL: add(42,42) = 84
 ```
 とこのように、呼出時の引数とその返り値を表示することができます。
+#### ブラウザで楽に検証
+```js
+const watch_access=await import("https://unpkg.com/watch-access")
+```
 ## 貢献
 bun使ってますけどpackage.jsonにbunを書いておいたのでnodeでも大丈夫です
 テストはbun:testを使ってるのでしたかったらbun入れてきてください
