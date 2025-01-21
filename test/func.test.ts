@@ -32,3 +32,29 @@ it("Proxy function", ()=>{
     expect(fnclog[0][3]).toBe(1);
     expect(fnclog[0][4]).toBe(2);
 })
+
+it("Nested Proxy function", ()=>{
+    const objlog: [PropertyKey, unknown, boolean][] = [];
+    const fnclog: [Function, string, any, ...any][] = [];
+    const fnobj = watchObj({
+        funcs: {
+            add(a: number, b: number){return a+b}
+        }
+    }, (...args)=>objlog.push(args), {
+        funcReporter: (...args) => fnclog.push(args)
+    })
+    fnobj.funcs.add(1,2);
+
+    expect(objlog.length).toBe(2);
+    expect(objlog[0][0]).toBe("funcs");
+    expect(objlog[0][2]).toBe(false);
+    expect(objlog[1][0]).toBe("funcs.add");
+    expect(objlog[1][2]).toBe(false);
+
+    expect(fnclog.length).toBe(1);
+    expect(fnclog[0].length).toBe(5);
+    expect(fnclog[0][1]).toBe("funcs.add");
+    expect(fnclog[0][2]).toBe(3);
+    expect(fnclog[0][3]).toBe(1);
+    expect(fnclog[0][4]).toBe(2);
+})
