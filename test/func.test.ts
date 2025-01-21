@@ -3,7 +3,7 @@ import { watchFn, watchObj } from "../src"
 
 it("Call function", ()=>{
     const r: any[][] = [];
-    const add = watchFn((a,b)=>a+b, (e,...args)=>r.push(args))
+    const add = watchFn<[number, number], number, any>((a,b)=>a+b, (e,...args)=>r.push(args))
     add(1,2);
     expect(r.length).toBe(1);
     expect(r[0][0]).toBe(3); //ret

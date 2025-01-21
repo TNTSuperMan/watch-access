@@ -1,4 +1,4 @@
-import { createWrappedAnyFunction } from "./func";
+import { createWrappedFunction } from "./func";
 
 export type ObjectReporter = (prop: string, value: unknown, set: boolean)=>void;
 
@@ -29,7 +29,8 @@ export const createProxy = <T extends object>
             }
             report(p.toString(), value, false);
             if(options?.funcReporter && typeof value == "function"){
-                return createWrappedAnyFunction(value, (t, r, ...args) =>
+                //@ts-ignore
+                return createWrappedFunction<any[], any, any>(value, (t, r, ...args) =>
                     (options?.funcReporter??(()=>{}))(t, path + p.toString(), r, ...args));
             }else{
                 return value;
