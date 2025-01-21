@@ -1,8 +1,8 @@
 import { build, BuildOutput } from "bun";
 
-function b(format: "esm" | "cjs" | "iife"): Promise<BuildOutput>{
+function b(format: "esm" | "cjs" | "iife", entry: string = "./src/index.ts"): Promise<BuildOutput>{
     return build({
-        entrypoints: ["./src/index.ts"],
+        entrypoints: [entry],
         outdir: "./dist",
         target: "node",
         format,
@@ -13,3 +13,4 @@ function b(format: "esm" | "cjs" | "iife"): Promise<BuildOutput>{
 }
 b("esm")
 b("cjs")
+b("iife", "./src/_iife.js");
