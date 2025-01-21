@@ -1,7 +1,7 @@
 {
   "name": "watch-access",
   "description": "Watch object and function access",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/TNTSuperMan/watch-access"
