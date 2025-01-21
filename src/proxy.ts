@@ -1,6 +1,6 @@
 import { createWrappedAnyFunction } from "./func";
 
-export type ObjectReporter = (prop: PropertyKey, value: unknown, set: boolean)=>void;
+export type ObjectReporter = (prop: string, value: unknown, set: boolean)=>void;
 
 type ObjectWatchOptions = {
     isShallow?: boolean,
@@ -27,7 +27,7 @@ export const createProxy = <T extends object>
                 Reflect.set(t,p,value,r);
                 proxied.push(p);
             }
-            report(p, value, false);
+            report(p.toString(), value, false);
             if(options?.funcReporter && typeof value == "function"){
                 return createWrappedAnyFunction(value, (t, r, ...args) =>
                     (options?.funcReporter??(()=>{}))(t, path + p.toString(), r, ...args));
@@ -36,7 +36,7 @@ export const createProxy = <T extends object>
             }
         },
         set(t,p,v,r){
-            report(p, v, true);
+            report(p.toString(), v, true);
             if(!options?.isShallow && typeof v == "object" && v){
                 return Reflect.set(t,p,createChildProxy(v, p),r);
             }else{
