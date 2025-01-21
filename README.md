@@ -5,6 +5,15 @@
 - 監視イベント内でvalueにアクセスする場合・以下の例のようにオブジェクトを文字にする場合等にも監視イベントが発生します
 - シャローモードで監視すると対象内のオブジェクトの変更を検知できません
 - 関数を監視する際に関数の型を維持するためには非常に厳格な型指定が必要です
+## install
+```bash
+$ npm install watch-access
+```
+## CDN
+> bunのバンドラを使ったためIIFE用を用意出来ませんでした
+
+[ESモジュール用](https://unpkg.com/watch-access/dist/esm.js)
+[CommonJS用](https://unpkg.com/watch-access/dist/cjs.js)
 ## how to use
 #### オブジェクト
 ```js
