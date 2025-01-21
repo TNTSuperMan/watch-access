@@ -1,7 +1,7 @@
 import { expect, it } from "bun:test";
 import { watchFn } from "../src"
 
-it("Cal function", ()=>{
+it("Call function", ()=>{
     const r: any[][] = [];
     const add = watchFn((a,b)=>a+b, (e,...args)=>r.push(args))
     add(1,2);
