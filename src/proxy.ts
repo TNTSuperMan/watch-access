@@ -5,15 +5,17 @@ export type ObjectReporter = (prop: PropertyKey, value: unknown, set: boolean)=>
 type ObjectWatchOptions = {
     isShallow?: boolean,
     doWatchOnReporter?: boolean,
-    funcReporter?: (target: Function, res: any, ...args: any) => void
+    _path?: string,
+    funcReporter?: (target: Function, path: string, res: any, ...args: any) => void
 }
 
 export const createProxy = <T extends object>
     (target: T, report: ObjectReporter, options?: ObjectWatchOptions): T => {
-    
+    const path = (options?._path ? options._path + "." : "");
     const createChildProxy = <T extends object>(target: T, prop: PropertyKey):T =>
         createProxy(target,
-            (cp,cv,cs)=>report(prop.toString()+"."+cp.toString(), cv, cs), options);
+            (cp,cv,cs)=>report(prop.toString()+"."+cp.toString(), cv, cs), {...options,
+                _path: path + prop.toString()});
     
     const proxied: PropertyKey[] = [];
     
@@ -27,7 +29,8 @@ export const createProxy = <T extends object>
             }
             report(p, value, false);
             if(options?.funcReporter && typeof value == "function"){
-                return createWrappedAnyFunction(value, options.funcReporter);
+                return createWrappedAnyFunction(value, (t, r, ...args) =>
+                    (options?.funcReporter??(()=>{}))(t, path + p.toString(), r, ...args));
             }else{
                 return value;
             }
